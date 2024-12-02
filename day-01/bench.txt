@@ -1,0 +1,3 @@
+day_01    fastest       │ slowest       │ median        │ mean          │ samples │ iters
+├─ part1  59.95 µs      │ 120.4 µs      │ 60.29 µs      │ 61.14 µs      │ 100     │ 100
+╰─ part2  143.8 µs      │ 147.9 µs      │ 144.1 µs      │ 144.2 µs      │ 100     │ 100
