@@ -1,38 +1,4 @@
-use nom::{
-    branch::alt,
-    bytes::complete::tag,
-    character::complete::{self, anychar},
-    multi::{many1, many_till},
-    sequence::{delimited, preceded, separated_pair},
-    IResult, Parser,
-};
-
-#[derive(Debug)]
-enum Instruction {
-    Do,
-    Dont,
-    Mul(u64, u64),
-}
-
-fn parse_instruction(input: &str) -> IResult<&str, Instruction> {
-    alt((
-        tag("don't()").map(|_| Instruction::Dont),
-        tag("do()").map(|_| Instruction::Do),
-        preceded(
-            tag("mul"),
-            delimited(
-                tag("("),
-                separated_pair(complete::u64, tag(","), complete::u64)
-                    .map(|(a, b)| Instruction::Mul(a, b)),
-                tag(")"),
-            ),
-        ),
-    ))(input)
-}
-
-fn parse(input: &str) -> IResult<&str, Vec<Instruction>> {
-    many1(many_till(anychar, parse_instruction).map(|(_, instruction)| instruction))(input)
-}
+use crate::{parse, Instruction};
 
 pub fn process(input: &'static str) -> anyhow::Result<String> {
     let (_, mul_instructions) = parse(input)?;
